@@ -1,0 +1,41 @@
+CREATE TABLE customer (
+  cust_id serial PRIMARY KEY,
+  cust_first_name varchar(50) unique,
+  cust_last_name varchar(50) unique,
+  contact varchar(10) unique,
+  email varchar(30) unique,
+  dob date unique,
+  gender varchar(1) unique 
+);
+
+CREATE TABLE inventory (
+  id serial PRIMARY KEY,
+  location varchar(20),
+  quantity_on_hand int,
+  p_id int
+);
+
+CREATE TABLE order_items (
+  id serial PRIMARY KEY,
+  order_id int,
+  product_id int,
+  unit_price NUMERIC(8,2),
+  quantity int
+);
+
+CREATE TABLE product_info (
+  p_id serial PRIMARY KEY,
+  product_name varchar(50),
+  product_desc varchar(500),
+  supplier varchar(10),
+  list_price NUMERIC(8,2),
+  min_price NUMERIC(8,2)
+);
+
+CREATE TABLE tbl_order (
+  order_id serial PRIMARY KEY,
+  order_date date,
+  customer_id int,
+  order_status int,
+  order_total NUMERIC(8,2)
+);
