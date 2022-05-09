@@ -33,14 +33,16 @@ public class Select extends HttpServlet {
             out.println("<h2 align='center'>Product Data</h2><br>");
 
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
-                Statement stmt = conn.createStatement();
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = stmt.executeQuery("Select * from product_info");
 
                 out.println("<html><head><title>Select Query</title></head><body>");
                 out.println("<table align='center' border ='3px'  width=70% >");
                 out.println("<tr><th>Product Name</th><th>Description</th><th>Supplier name</th><th>List Price</th><th>Min Price</th></tr>");
+                out.println("<a href=\"index.html\">return</a><br><br>");
 
                 if(rs.next()) {
                     rs.beforeFirst();
@@ -81,17 +83,19 @@ public class Select extends HttpServlet {
         else if(request.getParameter("q2") != null)
         {
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("Select DISTINCT customer.cust_first_name from orders INNER JOIN customer ON  customer.cust_id = orders.customer_id");
+                Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+                ResultSet rs = stmt.executeQuery("Select DISTINCT customer.cust_first_name from tbl_order INNER JOIN customer ON  customer.cust_id = tbl_order.customer_id");
                 if(rs.next()) {
                     rs.beforeFirst();
                     out.println("<html><head><title>Select Query 2</title></head><body>");
 
                     out.println("<table align='center' border = '3px'  width= 20%  >");
                     out.println("<tr><th>Customer name</th></tr>");
+
 
                     while(rs.next())
                     {
@@ -108,6 +112,7 @@ public class Select extends HttpServlet {
 
 
                     out.println("</table></body></html>");
+                    out.println("<a href=\"index.html\">return</a><br><br>");
                 }
                 else {
                     out.println("<h2 align='center'>No Data Found</h2");
@@ -126,11 +131,12 @@ public class Select extends HttpServlet {
 
             int prod_id = Integer.parseInt(request.getParameter("prod_id"));
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
-                String query = "SELECT  product_name, supplier, list_price from product_info where  p_id= ?";
-                PreparedStatement ps = conn.prepareStatement(query);
+                String query = "SELECT  product_name, supplier, list_price from product_info where  prod_id= ?";
+                PreparedStatement ps = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
                 ps.setInt(1,prod_id);
 
                 ResultSet rs = ps.executeQuery();
@@ -159,6 +165,7 @@ public class Select extends HttpServlet {
 
 
                     out.println("</table></body></html>");
+                    out.println("<a href=\"index.html\">return</a><br><br>");
                 }
                 else {
                     out.println("<h2 align='center'>No Data Found</h2");
@@ -179,11 +186,12 @@ public class Select extends HttpServlet {
 
             int qty = Integer.parseInt(request.getParameter("quantity"));
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
                 String query = "SELECT  * from inventory where  quantity_on_hand < ?";
-                PreparedStatement ps = conn.prepareStatement(query);
+                PreparedStatement ps = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
                 ps.setInt(1,qty);
 
                 ResultSet rs = ps.executeQuery();
@@ -211,6 +219,7 @@ public class Select extends HttpServlet {
                     }
 
                     out.println("</table></body></html>");
+                    out.println("<a href=\"index.html\">return</a><br><br>");
                 }
 
                 else {
@@ -230,11 +239,12 @@ public class Select extends HttpServlet {
         {
             int cust_id = Integer.parseInt(request.getParameter("customer_id"));
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
-                String query = "SELECT   * from orders where customer_id = ?";
-                PreparedStatement ps = conn.prepareStatement(query);
+                String query = "SELECT   * from tbl_order where customer_id = ?";
+                PreparedStatement ps = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
                 ps.setInt(1,cust_id);
                 ResultSet rs = ps.executeQuery();
 
@@ -280,6 +290,7 @@ public class Select extends HttpServlet {
 
 
                     out.println("</table></body></html>");
+                    out.println("<a href=\"index.html\">return</a><br><br>");
                 }
 
                 else {

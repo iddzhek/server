@@ -2,17 +2,15 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 
 /**
  * Servlet implementation class Add_Order
@@ -39,12 +37,12 @@ public class Add_Order extends HttpServlet {
         try
         {
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
-            String query = " insert into orders(order_date, customer_id,order_status,order_total) values(?,?,?,?)";
+            String query = " insert into tbl_order(order_date, customer_id,order_status,order_total) values(?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
 
-            ps.setString(1, request.getParameter("odate"));
+            ps.setDate(1, Date.valueOf(request.getParameter("order_date")));
             ps.setInt(2,custid);
 
             ps.setInt(3,ostatus);
@@ -58,11 +56,12 @@ public class Add_Order extends HttpServlet {
 
                 try{
                     Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery("Select  customer.*,orders.* from orders INNER JOIN customer ON  customer.cust_id = orders.customer_id");
+                    ResultSet rs = stmt.executeQuery("Select  customer.*,tbl_order.* from tbl_order INNER JOIN customer ON  customer.cust_id = tbl_order.customer_id");
 
                     out.println("<html><body>");
                     out.println("<table align='center' border = '3px'  width= 70%  >");
                     out.println("<tr><th>Order id</th><th>Customer name</th><th>Contact number</th><th>Order Date</th><th>Order status</th><th>Order total</th></tr>");
+                    out.println("<a href=\"index.html\">return</a><br><br>");
 
                     while(rs.next())
                     {
@@ -117,5 +116,4 @@ public class Add_Order extends HttpServlet {
             e.printStackTrace();
         }
     }
-
 }

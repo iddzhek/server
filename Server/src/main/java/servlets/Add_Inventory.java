@@ -49,21 +49,20 @@ public class Add_Inventory extends HttpServlet {
 
         out = response.getWriter();
 
-//        int pid = Integer.parseInt(request.getParameter("pid"));
-//
+        int pid = Integer.parseInt(request.getParameter("pid"));
+
 //        int qoh =  Integer.parseInt(request.getParameter("qoh"));
         try
         {
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
-            String query = " Insert into inventory(location,quantity_on_hand,p_id) values(upper(?),?,?)";
+            String query = " Insert into inventory(location,quantity_on_hand, p_id) values(upper(?),?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1,request.getParameter("loc"));
+            ps.setString(1,request.getParameter("location"));
             ps.setInt(2, Integer.parseInt(request.getParameter("quantity_on_hand")));
-            ps.setInt(3, Integer.parseInt(request.getParameter("p_id")));
-
-
+            System.out.println(pid);
+            ps.setInt(3, Integer.parseInt(request.getParameter("pid")));
 
             int x = ps.executeUpdate();
 
@@ -72,11 +71,12 @@ public class Add_Inventory extends HttpServlet {
 
                 try{
                     Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery("Select product_info.*,inventory.* from inventory INNER JOIN product_info ON product_info.p_id =inventory.p_id");
+                    ResultSet rs = stmt.executeQuery("Select product_info.*,inventory.* from inventory INNER JOIN product_info ON product_info.prod_id =inventory.p_id");
 
                     out.println("<html><head><title>Inventory Data</title> </head><body>");
                     out.println("<table align='center' border = '3px'  width= 70% >");
                     out.println("<tr><th>Product Name</th><th>Description</th><th>Quantity on hand</th><th>Location</th><th>List Price</th><th>Min Price</th></tr>");
+                    out.println("<a href=\"index.html\">return</a><br><br>");
 
                     while(rs.next()){
 

@@ -10,9 +10,9 @@
 <body>
 <%
 Class.forName("org.postgresql.Driver");
-Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
-Statement st=con.createStatement();
-ResultSet rs=st.executeQuery("Select * from customer");
+Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+Statement statement = conn.createStatement();
+ResultSet rs=statement.executeQuery("SELECT * FROM customer");
 %>
 <form action="Add_Order" method="post">
 <h3>Order Information</h3>
@@ -24,7 +24,7 @@ ResultSet rs=st.executeQuery("Select * from customer");
  </select><br><br>
 
  <label>Order Date :</label>
- <input type="date" name="odate"><br><br>
+ <input type="date" name="order_date"><br><br>
 
  <label>Order Status :</label>
  <select name="status">

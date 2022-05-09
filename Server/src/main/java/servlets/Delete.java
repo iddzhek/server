@@ -32,7 +32,7 @@ public class Delete extends HttpServlet {
         {
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
                 String query = "DELETE FROM customer where dob  = ?";
                 PreparedStatement ps = conn.prepareStatement(query);
@@ -63,8 +63,8 @@ public class Delete extends HttpServlet {
         else if(request.getParameter("q2") != null)
         {
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","postgres", "admin");
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
                 String query = "DELETE FROM inventory where  location = upper(?)";
                 PreparedStatement ps = conn.prepareStatement(query);
@@ -98,10 +98,10 @@ public class Delete extends HttpServlet {
             int o_total = Integer.parseInt(request.getParameter("o_total"));
 
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
-                String query = "DELETE  FROM orders  where  order_total  < ?";
+                String query = "DELETE  FROM tbl_order  where  order_total  < ?";
                 PreparedStatement ps = conn.prepareStatement(query);
                 ps.setInt(1, o_total);
 
@@ -131,8 +131,8 @@ public class Delete extends HttpServlet {
         else if(request.getParameter("q4") != null)
         {
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
                 String query = "DELETE FROM product_info where supplier= upper(?)";
                 PreparedStatement ps = conn.prepareStatement(query);
@@ -162,8 +162,8 @@ public class Delete extends HttpServlet {
         else if(request.getParameter("q5") != null)
         {
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+                Class.forName("org.postgresql.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
                 String query = "DELETE  FROM order_items where  unit_price = ? AND quantity = ?";
                 PreparedStatement ps = conn.prepareStatement(query);

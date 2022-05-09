@@ -35,16 +35,15 @@ public class Add_Customer extends HttpServlet {
 
         try {
             Class.forName("org.postgresql.Driver");
-            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
-            String query = "Insert into customer(cust_first_name,cust_last_name,contact,email,dob, gender) values (upper(?),upper(?),?,?,?,?)";
+            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+            String query = "Insert into customer(cust_first_name,cust_last_name,contact,email, gender) values (upper(?),upper(?),?,?,?)";
 
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1,request.getParameter("fname"));
             ps.setString(2,request.getParameter("lname"));
             ps.setString(3,request.getParameter("c"));
             ps.setString(4,request.getParameter("email"));
-            ps.setString(5,request.getParameter("dob"));
-            ps.setString(6,request.getParameter("gen"));
+            ps.setString(5,request.getParameter("gen"));
 
             int x = ps.executeUpdate();
 //            ps.executeUpdate();
@@ -58,7 +57,7 @@ public class Add_Customer extends HttpServlet {
 
                     out.println("<html><head><title>Customer Data</title></head><body>");
                     out.println("<table align='center' padding='5px' border = '3px'  width= 70% >");
-                    out.println("<tr><th>Customer Name</th><th>Contact Number</th><th>Email</th><th>Date of Birth</th><th>Gender</th></tr>");
+                    out.println("<tr><th>Customer Name</th><th>Contact Number</th><th>Email</th><th>Gender</th></tr>");
                     out.println("<a href=\"index.html\">return</a><br><br>");
 
 
@@ -69,7 +68,6 @@ public class Add_Customer extends HttpServlet {
                         String c_last_name = rs.getString("cust_last_name");
                         String phone_number = rs.getString("contact");
                         String c_email = rs.getString("email");
-                        String date_of_birth = rs.getString("dob");
                         String gender = rs.getString("gender");
 
 
@@ -77,7 +75,6 @@ public class Add_Customer extends HttpServlet {
                         out.println("<td>"+  c_first_name + "   " + c_last_name+ "</td> ");
                         out.println("<td>"+ phone_number +  "</td> ");
                         out.println("<td>"+  c_email+ "</td> ");
-                        out.println("<td>"+  date_of_birth + "</td> ");
 
 
                         if(gender.equals("f"))

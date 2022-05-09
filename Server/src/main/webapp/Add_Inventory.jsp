@@ -12,8 +12,9 @@
 <h3>Inventory Information</h3>
 <%
 Class.forName("org.postgresql.Driver");
-Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
-ResultSet rs=st.executeQuery("Select * from product_info");
+Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+Statement statement = conn.createStatement();
+ResultSet rs=statement.executeQuery("SELECT * FROM product_info");
 %>
 
 <label>Product :</label>
@@ -24,10 +25,10 @@ ResultSet rs=st.executeQuery("Select * from product_info");
  </select><br><br>
 
 <label>Location :</label>
-<input type="text" name="loc" placeholder="Enter Location"><br><br>
+<input type="text" name="location" placeholder="Enter Location"><br><br>
 
 <label>Quantity On Hand :</label>
-<input type="text" name="qoh" placeholder="Enter Quantity on Hand"><br><br>
+<input type="text" name="quantity_on_hand" placeholder="Enter Quantity on Hand"><br><br>
 
 <input type="submit" name="submit" value="Add Inventory">&nbsp;&nbsp;&nbsp;
 <input type="reset" name="reset" value="Clear"/>

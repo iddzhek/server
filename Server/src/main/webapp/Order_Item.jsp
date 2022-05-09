@@ -10,9 +10,9 @@
 <body>
 <%
 Class.forName("org.postgresql.Driver");
-Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
-Statement st=con.createStatement();
-ResultSet r1=st.executeQuery("Select order_id from orders");
+Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+Statement statement = conn.createStatement();
+ResultSet r1=statement.executeQuery("Select order_id from tbl_order");
 %>
 
 <form method="post" action="Add_Item">
@@ -23,7 +23,7 @@ ResultSet r1=st.executeQuery("Select order_id from orders");
             <option value="<%= r1.getInt(1)%>" ><%= r1.getInt(1) %> </option>
    <% } %>
 </select><br><br>
-<% ResultSet r2=st.executeQuery("Select p_id,product_name from product_info"); %>
+<% ResultSet r2=statement.executeQuery("Select prod_id,product_name from product_info"); %>
 <label>Product Name :</label>
 <select name="pid" style="width: 70px;">
 	<%  while(r2.next()){ %>

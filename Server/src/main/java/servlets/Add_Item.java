@@ -41,7 +41,7 @@ public class Add_Item extends HttpServlet {
         try
         {
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
 
 
             String query = " insert into order_items(order_id, product_id,unit_price,quantity) values(?,?,?,?)";
@@ -62,12 +62,12 @@ public class Add_Item extends HttpServlet {
 
                 try{
                     Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery("Select  order_items.*,orders.*,product_info.* from((order_items  INNER JOIN  orders ON order_items.order_id = orders.order_id) INNER JOIN product_info ON order_items.product_id = product_info.p_id)");
+                    ResultSet rs = stmt.executeQuery("Select  order_items.*,tbl_order.*,product_info.* from((order_items  INNER JOIN  tbl_order ON order_items.order_id = tbl_order.order_id) INNER JOIN product_info ON order_items.product_id = product_info.prod_id)");
 
                     out.println("<html><body>");
                     out.println("<table align='center' border = '3px'  width= 70%  >");
                     out.println("<tr><th>Order id</th><th>Product name</th><th>Unit price</th><th>Quantity</th><th>Order Date</th></tr>");
-
+                    out.println("<a href=\"index.html\">return</a><br><br>");
 
 
                     while(rs.next())
