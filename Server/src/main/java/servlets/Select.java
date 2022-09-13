@@ -34,7 +34,7 @@ public class Select extends HttpServlet {
 
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
                 Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = stmt.executeQuery("Select * from product_info");
@@ -84,7 +84,7 @@ public class Select extends HttpServlet {
         {
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
@@ -132,7 +132,7 @@ public class Select extends HttpServlet {
             int prod_id = Integer.parseInt(request.getParameter("prod_id"));
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 String query = "SELECT  product_name, supplier, list_price from product_info where  prod_id= ?";
                 PreparedStatement ps = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -187,7 +187,7 @@ public class Select extends HttpServlet {
             int qty = Integer.parseInt(request.getParameter("quantity"));
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 String query = "SELECT  * from inventory where  quantity_on_hand < ?";
                 PreparedStatement ps = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -240,7 +240,7 @@ public class Select extends HttpServlet {
             int cust_id = Integer.parseInt(request.getParameter("customer_id"));
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 String query = "SELECT   * from tbl_order where customer_id = ?";
                 PreparedStatement ps = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,

@@ -55,7 +55,7 @@ public class Add_Inventory extends HttpServlet {
         try
         {
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
             String query = " Insert into inventory(location,quantity_on_hand, p_id) values(upper(?),?,?)";
             PreparedStatement ps = conn.prepareStatement(query);

@@ -2,6 +2,7 @@ servlets\Add_Customer.class
 servlets\Add_Order.class
 servlets\Delete.class
 servlets\Update.class
+servlets\Add_Delivery.class
 servlets\Select.class
 sql\Customer.class
 servlets\Add_Item.class

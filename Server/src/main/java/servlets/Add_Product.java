@@ -35,7 +35,7 @@ public class Add_Product extends HttpServlet {
         float m = Float.parseFloat(request.getParameter("min"));
         try {
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
             String query = "Insert into product_info(product_name,product_desc,supplier,list_price,min_price) values (upper(?),?,upper(?),?,?)";
             PreparedStatement ps = conn.prepareStatement(query);

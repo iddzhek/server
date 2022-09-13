@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
@@ -28,43 +29,43 @@ public class Delete extends HttpServlet {
         response.setContentType("text/html");
 
         // 1st query ==============================================================================================
-        if(request.getParameter("q1") != null)
-        {
-            try{
-                Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
-
-                String query = "DELETE FROM customer where dob  = ?";
-                PreparedStatement ps = conn.prepareStatement(query);
-
-                ps.setString(1, request.getParameter("dob"));
-
-                int x = ps.executeUpdate();
-
-                if(x >= 1)
-                {
-                    out.println("<h3>"+x+" Row Deleted Successfully</h3>");
-                }
-
-                else{
-                    out.println("<h3>No Data Found</h3>");
-                    out.println("<h3>0 Row Deleted</h3>");
-                }
-            }
-
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-
-        }
+//        if(request.getParameter("q1") != null)
+//        {
+//            try{
+//                Class.forName("org.postgresql.Driver");
+//                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+//
+//                String query = "DELETE FROM customer where dob  = ?";
+//                PreparedStatement ps = conn.prepareStatement(query);
+//
+//                ps.setDate(1, Date.valueOf(request.getParameter("dob")));
+//
+//                int x = ps.executeUpdate();
+//
+//                if(x >= 1)
+//                {
+//                    out.println("<h3>"+x+" Row Deleted Successfully</h3>");
+//                }
+//
+//                else{
+//                    out.println("<h3>No Data Found</h3>");
+//                    out.println("<h3>0 Row Deleted</h3>");
+//                }
+//            }
+//
+//            catch(Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+//
+//        }
 
         // 2nd query ======================================================================================
-        else if(request.getParameter("q2") != null)
+        if(request.getParameter("q2") != null)
         {
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 String query = "DELETE FROM inventory where  location = upper(?)";
                 PreparedStatement ps = conn.prepareStatement(query);
@@ -99,7 +100,7 @@ public class Delete extends HttpServlet {
 
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 String query = "DELETE  FROM tbl_order  where  order_total  < ?";
                 PreparedStatement ps = conn.prepareStatement(query);
@@ -128,49 +129,49 @@ public class Delete extends HttpServlet {
 
         // Query 4==============================================================================================
 
-        else if(request.getParameter("q4") != null)
-        {
-            try {
-                Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
-
-                String query = "DELETE FROM product_info where supplier= upper(?)";
-                PreparedStatement ps = conn.prepareStatement(query);
-                ps.setString(1,request.getParameter("s_name"));
-
-                int x = ps.executeUpdate();
-
-                if(x >= 1)
-                {
-                    out.println("<h3>"+x+" Row Deleted Successfully</h3>");
-                }
-
-                else{
-                    out.println("<h3>No Data Found</h3>");
-                    out.println("<h3>0 Row Deleted</h3>");
-                }
-            }
-
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-
-        }
+//        else if(request.getParameter("q4") != null)
+//        {
+//            try {
+//                Class.forName("org.postgresql.Driver");
+//                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
+//
+//                String query = "DELETE FROM product_info where supplier= upper(?)";
+//                PreparedStatement ps = conn.prepareStatement(query);
+//                ps.setString(1,request.getParameter("s_name"));
+//
+//                int x = ps.executeUpdate();
+//
+//                if(x >= 1)
+//                {
+//                    out.println("<h3>"+x+" Row Deleted Successfully</h3>");
+//                }
+//
+//                else{
+//                    out.println("<h3>No Data Found</h3>");
+//                    out.println("<h3>0 Row Deleted</h3>");
+//                }
+//            }
+//
+//            catch(Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+//
+//        }
 
         //5th query==========================================================================================
         else if(request.getParameter("q5") != null)
         {
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
-                String query = "DELETE  FROM order_items where  unit_price = ? AND quantity = ?";
+                String query = "DELETE  FROM deliveries where  name_delivery = ? AND product_count = ?";
                 PreparedStatement ps = conn.prepareStatement(query);
-                float u_price = Float.parseFloat(request.getParameter("u_price"));
-                int qty = Integer.parseInt(request.getParameter("qty"));
-                ps.setFloat(1, u_price);
-                ps.setInt(2,qty);
+                String  name_delivery = request.getParameter("name_delivery");
+                int product_count = Integer.parseInt(request.getParameter("product_count"));
+                ps.setString(1, name_delivery);
+                ps.setInt(2,product_count);
 
                 int x = ps.executeUpdate();
 

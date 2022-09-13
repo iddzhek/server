@@ -30,24 +30,24 @@ public class Add_Order extends HttpServlet {
 
         out = response.getWriter();
 
-        int custid = Integer.parseInt(request.getParameter("cid"));
+        int custid = Integer.parseInt(request.getParameter("custid"));
+        int prodid =  Integer.parseInt(request.getParameter("prodid"));
         int ostatus =  Integer.parseInt(request.getParameter("status"));
         int total =  Integer.parseInt(request.getParameter("total"));
 
         try
         {
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
-            String query = " insert into tbl_order(order_date, customer_id,order_status,order_total) values(?,?,?,?)";
+            String query = " insert into tbl_order(order_date, customer_id, product_id, order_status,order_total) values(?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
 
             ps.setDate(1, Date.valueOf(request.getParameter("order_date")));
             ps.setInt(2,custid);
-
-            ps.setInt(3,ostatus);
-
-            ps.setFloat(4,total);
+            ps.setInt(3,prodid);
+            ps.setInt(4,ostatus);
+            ps.setFloat(5,total);
 
             int x = ps.executeUpdate();
             if(x == 1)

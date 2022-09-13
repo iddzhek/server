@@ -15,7 +15,7 @@ Statement statement = conn.createStatement();
 ResultSet r1=statement.executeQuery("Select order_id from tbl_order");
 %>
 
-<form method="post" action="Add_Item">
+<form method="post" action="Add_Delivery">
 <h3>Order Item Information</h3>
 <label>Order Id :</label>
 <select name="oid" style="width: 70px;">
@@ -25,19 +25,22 @@ ResultSet r1=statement.executeQuery("Select order_id from tbl_order");
 </select><br><br>
 <% ResultSet r2=statement.executeQuery("Select prod_id,product_name from product_info"); %>
 <label>Product Name :</label>
-<select name="pid" style="width: 70px;">
+<select name="pid" style="width: 200px;">
 	<%  while(r2.next()){ %>
             <option value="<%= r2.getInt(1)%>" ><%= r2.getString(2) %> </option>
    <% } %>
 </select><br><br>
 
-<label>Unit Price :</label>
-<input type="text" name="u_price" placeholder="Enter Unit Price"><br><br>
+<label>Name Delivery :</label>
+<input type="text" name="n_delv" placeholder="Enter Name Delivery"><br><br>
 
-<label>Quantity</label>
-<input type="text" name="qty" placeholder="Enter Quantity"><br><br>
+<label>Product Count :</label>
+<input type="text" name="p_count" placeholder="Enter Product Count"><br><br>
 
-<input type="submit" name="submit" value="Add Order Items">&nbsp;&nbsp;&nbsp;
+<label>Delivery Date :</label>
+<input type="date" name="delv_date" placeholder="Enter Delivery Date"><br><br>
+
+<input type="submit" name="submit" value="Add Order Delivery">&nbsp;&nbsp;&nbsp;
 <input type="reset" name="reset" value="Clear">
 </form>
 </body>

@@ -12,7 +12,7 @@
 <h3>Inventory Information</h3>
 <%
 Class.forName("org.postgresql.Driver");
-Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 Statement statement = conn.createStatement();
 ResultSet rs=statement.executeQuery("SELECT * FROM product_info");
 %>

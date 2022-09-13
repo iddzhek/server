@@ -34,20 +34,12 @@
   cust_last_name varchar(50),
   contact varchar(10) unique,
   email varchar(30) unique,
-  dob varchar(30),
-  gender varchar(1) 
-);
-
-CREATE TABLE order_items (
-  id serial PRIMARY KEY,
---  order_id int unique ,
-  product_id int,
-  unit_price NUMERIC(8,2),
-  quantity int
+  dob date not null ,
+  gender varchar(1)
 );
 
 CREATE TABLE product_info (
-  id serial PRIMARY KEY,
+  prod_id serial PRIMARY KEY,
   product_name varchar(50),
   product_desc varchar(500),
   supplier varchar(10),
@@ -56,20 +48,43 @@ CREATE TABLE product_info (
 );
 
 CREATE TABLE inventory (
-  id serial PRIMARY KEY,
+  inv_id serial PRIMARY KEY,
   location varchar(20),
   quantity_on_hand int,
-  p_id int references product_info(id) on delete cascade
+  p_id int,
+  FOREIGN KEY (p_id) references product_info(prod_id)
 );
+
+--CREATE TABLE order_items (
+--  order_id serial PRIMARY KEY,
+--  product_id int,
+--  unit_price NUMERIC(8,2),
+--  quantity int,
+--  FOREIGN KEY (product_id) references product_info(prod_id)
+--);
 
 CREATE TABLE tbl_order (
   order_id serial PRIMARY KEY,
   order_date date,
+  customer_id int,
+  product_id int,
   order_status int,
   order_total NUMERIC(8,2),
-  customer_id int references customer(cust_id) on delete cascade
+  FOREIGN KEY (customer_id) references customer(cust_id),
+  FOREIGN KEY (product_id) references product_info(prod_id)
+);
+
+CREATE TABLE deliveries (
+  deliveries_id serial PRIMARY KEY,
+  ord_id int,
+  product_id int,
+  name_delivery varchar(50),
+  product_count int,
+  delivery_date date,
+  FOREIGN KEY (product_id) references product_info(prod_id) ON DELETE CASCADE,
+  FOREIGN KEY (ord_id) references tbl_order(order_id) ON DELETE CASCADE
 );]]></console>
-      <console name="shop del" type="STANDARD" schema="public" session="Main"><![CDATA[drop table customer, inventory, order_items, product_info, tbl_order;]]></console>
+      <console name="shop del" type="STANDARD" schema="public" session="Main"><![CDATA[drop table customer, inventory, deliveries, product_info, tbl_order;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -79,7 +94,11 @@ CREATE TABLE tbl_order (
     <connection id="326ae3a3-3cd8-4a2d-b16d-d8ad2c236bf0" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="326ae3a3-3cd8-4a2d-b16d-d8ad2c236bf0" dataset="public.inventory" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="326ae3a3-3cd8-4a2d-b16d-d8ad2c236bf0" dataset="public.tbl_order" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="326ae3a3-3cd8-4a2d-b16d-d8ad2c236bf0" dataset="public.customer" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="326ae3a3-3cd8-4a2d-b16d-d8ad2c236bf0" dataset="public.deliveries" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="326ae3a3-3cd8-4a2d-b16d-d8ad2c236bf0" dataset="public.order_items" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="326ae3a3-3cd8-4a2d-b16d-d8ad2c236bf0" dataset="public.product_info" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">

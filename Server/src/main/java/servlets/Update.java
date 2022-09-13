@@ -36,7 +36,7 @@ public class Update extends HttpServlet {
 
 
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 float m_price = Float.parseFloat(request.getParameter("m_price"));
                 float l_price = Float.parseFloat(request.getParameter("l_price"));
@@ -76,7 +76,7 @@ public class Update extends HttpServlet {
 
 
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
 
                 String query = "UPDATE  tbl_order set order_status = ? where  customer_id = ?";
@@ -114,7 +114,7 @@ public class Update extends HttpServlet {
 
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 String query = "UPDATE  inventory set location = upper(?) where  p_id = ?";
                 PreparedStatement ps = conn.prepareStatement(query);
@@ -151,7 +151,7 @@ public class Update extends HttpServlet {
         {
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
                 String query = "UPDATE  customer set email = ? where  cust_first_name = upper(?)";
                 PreparedStatement ps = conn.prepareStatement(query);
@@ -186,15 +186,15 @@ public class Update extends HttpServlet {
         {
             try{
                 Class.forName("org.postgresql.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/postgres", "postgres", "admin");
 
-                String query = "UPDATE  order_items set quantity= ? where  product_id = ?";
+                String query = "UPDATE  deliveries set  product_count= ? where  product_id = ?";
                 PreparedStatement ps = conn.prepareStatement(query);
                 int p_id = Integer.parseInt(request.getParameter("p_id"));
-                int qty = Integer.parseInt(request.getParameter("qty"));
+                int prod_c = Integer.parseInt(request.getParameter("prod_c"));
 
-                ps.setInt(1, qty);
-                ps.setInt(2,p_id);
+                ps.setInt(1, p_id);
+                ps.setInt(2,prod_c);
 
                 int x = ps.executeUpdate();
 
